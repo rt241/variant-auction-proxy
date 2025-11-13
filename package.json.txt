@@ -1,0 +1,4 @@
+{
+  "name": "renewed-auction-proxy",
+  "private": true
+}

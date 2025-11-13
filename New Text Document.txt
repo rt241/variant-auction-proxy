@@ -1,0 +1,18 @@
+renewed-auction-proxy/
+  api/
+    status.js
+  package.json
+{
+  "name": "renewed-auction-proxy",
+  "private": true,
+  "type": "module",
+  "dependencies": {}
+}
+export default async function handler(req, res) {
+  res.setHeader('Content-Type', 'application/json');
+  res.status(200).json({
+    ok: true,
+    source: 'vercel',
+    path: req.url
+  });
+}

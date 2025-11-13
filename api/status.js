@@ -1,31 +1,19 @@
+// api/status.js
 export default function handler(req, res) {
-  // Build a URL object so we can read query parameters like ?ids=111,222
-  const url = new URL(req.url, "https://dummy-base");
-
-  // Get the "ids" query parameter, e.g. "111,222"
-  const idsParam = url.searchParams.get("ids");
-
-  // If no ?ids=... is provided, return the simple test message
-  if (!idsParam) {
-    return res.status(200).json({
-      ok: true,
-      message: "Proxy is working"
-    });
-  }
-
-  // Turn "111,222" into ["111", "222"]
+  // Expect query like: /api/status?ids=123,456,789
+  const idsParam = req.query.ids || '';
   const ids = idsParam
-    .split(",")
+    .split(',')
     .map(id => id.trim())
     .filter(Boolean);
 
-  // For now, create a fake highestBid for each id
-  // Example: for ids [111, 222, 333] => 100, 105, 110
-  const result = ids.map((id, index) => ({
+  // For now: no random, no DB.
+  // We just say "no recorded bids yet" for every variant.
+  // Front-end will keep the Shopify starting price you set in Liquid.
+  const payload = ids.map(id => ({
     id,
-    highestBid: 100 + index * 5
+    highestBid: 0
   }));
 
-  // Return the array as JSON
-  res.status(200).json(result);
+  res.status(200).json(payload);
 }
